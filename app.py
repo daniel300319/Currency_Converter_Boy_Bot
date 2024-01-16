@@ -7,11 +7,11 @@ bot = telebot.TeleBot(TOKEN)
 help_text = '''CurrencyСonverterBoy — конвертер валют.
 
 Для начала работы, введите сообщение в следующем формате:
-<Имя валюты> <Количество переводимой валюты> <В какую валюту перевести>
-Например, если Вы хотите перевести 100 долларов в рубли, запрос должен выглядеть как "доллар 100 рубль".
+<Имя валюты> <В какую валюту перевести> <Количество переводимой валюты>
+Например, если Вы хотите перевести 100 долларов в рубли, запрос должен выглядеть как "доллар рубль 100".
 
 Для просмотра доступных валют введите: /values'''
-valid_input = '\nКорректный ввод: \n<Имя валюты> <Количество переводимой валюты> <В какую валюту перевести>'
+valid_input = '\nКорректный ввод: \n<Имя валюты> <В какую валюту перевести> <Количество переводимой валюты>'
 
 
 @bot.message_handler(commands=['start'])
@@ -39,8 +39,8 @@ def convert(message):
         if len(values) < 3:
             raise APIException(f'Вы ввели менее 3-х параметров! {valid_input}')
 
-        curr1, amount, curr2 = values
-        base = Convertor.get_price(curr1, amount, curr2)
+        curr1, curr2, amount = values
+        base = Convertor.get_price(curr1, curr2, amount)
     except APIException as e:
         bot.reply_to(message, f'Ошибка пользователя:\n{e}')
     except Exception as e:

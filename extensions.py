@@ -9,7 +9,7 @@ class APIException(Exception):
 
 class Convertor:
     @staticmethod
-    def get_price(curr1: str, amount: str, curr2: str):
+    def get_price(curr1: str, curr2: str, amount: str):
 
         if curr1 == curr2:
             raise APIException(f'Валюты совпадают: {curr1}!')
